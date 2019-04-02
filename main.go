@@ -118,125 +118,33 @@ func ComputeGen(univ [][]int, m, n int) [][]int {
 
 func getliveAdjacentCellCount(univ [][]int, i, j, m, n int) int {
 	count := 0
-	if (i - 1) >= 0 {
-		if univ[i-1][j] == 1 {
-			count++
-		}
+	for k := i - 1; k <= i+1; k++ {
+		for l := j - 1; l <= j+1; l++ {
+			x := k
+			y := l
+			if x < 0 {
+				x = m - 1
+			}
 
-		if (j - 1) >= 0 {
-			if univ[i-1][j-1] == 1 {
-				count++
+			if x > m-1 {
+				x = 0
 			}
-		} else {
-			if univ[i-1][n-j-1] == 1 {
-				count++
-			}
-		}
 
-		if (j + 1) < n {
-			if univ[i-1][j+1] == 1 {
-				count++
+			if y < 0 {
+				y = n - 1
 			}
-		} else {
-			if univ[i-1][0] == 1 {
-				count++
-			}
-		}
-	} else {
-		if univ[m-i-1][j] == 1 {
-			count++
-		}
 
-		if (j - 1) >= 0 {
-			if univ[m-i-1][j-1] == 1 {
-				count++
+			if y > n-1 {
+				y = 0
 			}
-		} else {
-			if univ[m-i-1][n-j-1] == 1 {
-				count++
-			}
-		}
 
-		if (j + 1) < n {
-			if univ[m-i-1][j+1] == 1 {
-				count++
+			if x == i && y == j {
+				continue
 			}
-		} else {
-			if univ[m-i-1][0] == 1 {
-				count++
-			}
-		}
-	}
 
-	if (i + 1) < m {
-		if univ[i+1][j] == 1 {
-			count++
-		}
-
-		if (j - 1) >= 0 {
-			if univ[i+1][j-1] == 1 {
+			if univ[x][y] == 1 {
 				count++
 			}
-		} else {
-			if univ[i+1][n-j-1] == 1 {
-				count++
-			}
-		}
-
-		if (j + 1) < n {
-			if univ[i+1][j+1] == 1 {
-				count++
-			}
-		} else {
-			if univ[i+1][0] == 1 {
-				count++
-			}
-		}
-	} else {
-		if univ[0][j] == 1 {
-			count++
-		}
-
-		if (j - 1) >= 0 {
-			if univ[0][j-1] == 1 {
-				count++
-			}
-		} else {
-			if univ[0][n-j-1] == 1 {
-				count++
-			}
-		}
-
-		if (j + 1) < n {
-			if univ[0][j+1] == 1 {
-				count++
-			}
-		} else {
-			if univ[0][0] == 1 {
-				count++
-			}
-		}
-	}
-
-	if (j - 1) >= 0 {
-		if univ[i][j-1] == 1 {
-			count++
-		}
-
-	} else {
-		if univ[i][n-1-j] == 1 {
-			count++
-		}
-	}
-
-	if (j + 1) < n {
-		if univ[i][j+1] == 1 {
-			count++
-		}
-
-	} else {
-		if univ[i][0] == 1 {
-			count++
 		}
 	}
 
