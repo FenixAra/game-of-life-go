@@ -2,16 +2,8 @@ package main
 
 import (
 	"fmt"
-	"os"
-	"strconv"
-	"strings"
 	"time"
 )
-
-type Cell struct {
-	x int
-	y int
-}
 
 func main() {
 	// Size of the universe in m x n
@@ -23,41 +15,23 @@ func main() {
 	var gen int
 	fmt.Scanf("%d", &gen)
 
-	// Get the initial live cells in the universe
-	var liveCells []Cell
-	var noLiveCells int
-	fmt.Scanf("%d", &noLiveCells)
-	for i := 0; i < noLiveCells; i++ {
-		var str string
-		fmt.Scanf("%s", &str)
-
-		strs := strings.Split(str, ",")
-		if len(strs) < 2 {
-			os.Exit(1)
-		}
-
-		x, _ := strconv.Atoi(strs[0])
-		y, _ := strconv.Atoi(strs[1])
-		liveCells = append(liveCells, Cell{
-			x: x,
-			y: y,
-		})
-	}
-
 	universe := make([][]int, m)
 	for i := range universe {
 		universe[i] = make([]int, n)
 	}
 
-	// Create the universe
-	for _, c := range liveCells {
-		universe[c.x][c.y] = 1
+	// Get the initial live cells in the universe
+	var liveCellCount int
+	fmt.Scanf("%d", &liveCellCount)
+	for i := 0; i < liveCellCount; i++ {
+		var r, c int
+		fmt.Scanf("%d,%d", &r, &c)
+		universe[r][c] = 1
 	}
 
 	s := time.Now()
-
 	for i := 0; i < gen; i++ {
-		universe = ComputeGen(universe, m, n)
+		universe = ComputeNextGen(universe, m, n)
 
 		extinct := true
 		for k := 0; k < m; k++ {
@@ -87,7 +61,7 @@ func main() {
 	fmt.Println("time taken: ", time.Since(s))
 }
 
-func ComputeGen(univ [][]int, m, n int) [][]int {
+func ComputeNextGen(univ [][]int, m, n int) [][]int {
 	nextGenUniverse := make([][]int, m)
 	for i := range nextGenUniverse {
 		nextGenUniverse[i] = make([]int, n)
